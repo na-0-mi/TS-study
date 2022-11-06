@@ -24,7 +24,7 @@ const WordRelay = () => {
                 input.focus()
             }
         }
-    }, [value])
+    }, [value, word])
     //useCallback으로 함수 감쌀 때 타입추론 안될 수 있음 -> generic 사용시 가독성 떨어질 수 있으니 되도록 함수는 빼서 사용
     
     //generic 사용 안 한 버전
