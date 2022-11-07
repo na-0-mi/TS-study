@@ -1,33 +1,26 @@
-import { type } from '@testing-library/user-event/dist/type';
-import * as React from 'react'
-import { useCallback } from 'react';
-import { useRef, useState } from 'react'
-import Try from './Try'
+import * as React from 'react';
+import { useRef, useState } from 'react';
+import Try from './Try';
 import { TryInfo } from './types';
 
 const getNumbers = () => {
     const candidates = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-    const array = [];
+    const array: number[] = [];
     for (let i = 0; i < 4; i += 1) {
         const chosen = candidates.splice(Math.floor(Math.random() * (9 - i)), 1)[0];
         array.push(chosen);
     }
-    return array
-}
+    return array;
+};
 
-// interface TryInfo = {
-//     try: string;
-//     result: string;
-// }
+const NumberBaseball = () => {
+    const [answer, setAnswer] = useState(getNumbers());
+    const [value, setValue] = useState('');
+    const [result, setResult] = useState('');
+    const [tries, setTries] = useState<TryInfo[]>([]);
+    const inputEl = useRef<HTMLInputElement | null>(null);
 
-const NumberBaseBall = () => {
-    const [answer, setAnswer] = useState(getNumbers())
-    const [value, setValue] = useState('')
-    const [result, setResult] = useState('')
-    const [tries, setTries] = useState<TryInfo[]>([])
-    const inputEl = useRef<HTMLInputElement>(null) //cmd + 클릭으로 나오는 정의 확인
-
-    const onSubmitForm = useCallback<(e: React.FormEvent) => void>((e) => {
+    const onSubmitForm = (e: React.FormEvent) => {
         e.preventDefault();
         const input = inputEl.current;
         if (value === answer.join('')) {
@@ -83,21 +76,28 @@ const NumberBaseBall = () => {
                 }
             }
         }
-    }, [value, answer])
+    };
 
     return (
         <>
             <h1>{result}</h1>
             <form onSubmit={onSubmitForm}>
                 <input
-                    type="text"
                     ref={inputEl}
                     maxLength={4}
                     value={value}
                     onChange={(e) => setValue(e.target.value)}
                 />
+                <button>입력!</button>
             </form>
+            <div>시도: {tries.length}</div>
+            <ul>
+                {tries.map((v, i) => (
+                    <Try key={`${i + 1}차 시도 : ${v.try}`} tryInfo={v} />
+                ))}
+            </ul>
         </>
-    )
-}
-export default NumberBaseBall;
+    );
+};
+
+export default NumberBaseball;
