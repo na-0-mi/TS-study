@@ -5,7 +5,7 @@ const ResponseCheck = () => {
     const [state, setState] = useState('waiting')
     const [message, setMessage] = useState('클릭해서 시작하세요.')
     const [result, setResult] = useState<number[]>([]) //빈 배열은 타입이 잡히지 않으므로 제너릭 사용해서 타입정해주기
-    const timeout = useRef<number | null>(null)
+    const timeout = useRef<number | null>(null) //overloading 주의
     const startTime = useRef(0)
     const endTime = useRef(0)
     //ref를 쓰는 이유는 값이 바껴도 리렌더링 되지 않기 위해, 근데 current가 readOnly이면?
