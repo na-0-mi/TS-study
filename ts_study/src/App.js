@@ -1,9 +1,9 @@
-import WordRelay from "./WordRelay";
+import RSP from "./RSP";
 
 function App() {
   return (
     <>
-      <WordRelay />
+      <RSP />
     </>
   );
 }
